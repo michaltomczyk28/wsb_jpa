@@ -3,6 +3,7 @@ package com.jpacourse.persistance.entity;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "VISIT")
@@ -21,6 +22,14 @@ public class VisitEntity {
 	@ManyToOne
 	@JoinColumn(name = "DOCTOR_ID")
 	private DoctorEntity doctor;
+
+    // relacja jednostronna od strony dziecka
+	@OneToMany(
+		cascade = CascadeType.ALL,
+		fetch = FetchType.LAZY
+	)
+	@JoinColumn(name = "VISIT_ID")
+	private List<MedicalTreatmentEntity> medicalTreatments;
 
 	public Long getId() {
 		return id;
@@ -52,5 +61,14 @@ public class VisitEntity {
 
 	public void setDoctor(DoctorEntity doctor) {
 		this.doctor = doctor;
+	}
+
+	public List<MedicalTreatmentEntity> getMedicalTreatments() {
+		return medicalTreatments;
+	}
+
+	public void setMedicalTreatments(
+        List<MedicalTreatmentEntity> medicalTreatments) {
+		this.medicalTreatments = medicalTreatments;
 	}
 }
