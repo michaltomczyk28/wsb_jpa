@@ -29,6 +29,14 @@ public class PatientEntity {
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
 
+	@OneToOne(
+			cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY,
+			optional = false
+	)
+	@JoinColumn(name="ADDRESS_ID")
+	private AddressEntity address;
+
 	public Long getId() {
 		return id;
 	}
