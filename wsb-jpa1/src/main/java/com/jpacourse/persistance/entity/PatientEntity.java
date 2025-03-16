@@ -1,6 +1,7 @@
 package com.jpacourse.persistance.entity;
 
 import java.time.LocalDate;
+import java.util.Collection;
 
 import jakarta.persistence.*;
 
@@ -28,6 +29,17 @@ public class PatientEntity {
 
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
+
+	@OneToOne(
+			cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY,
+			optional = false
+	)
+	@JoinColumn(name="ADDRESS_ID")
+	private AddressEntity address;
+
+	@OneToMany(mappedBy = "patient")
+	private Collection<VisitEntity> visits;
 
 	public Long getId() {
 		return id;

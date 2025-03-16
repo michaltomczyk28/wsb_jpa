@@ -18,6 +18,10 @@ public class VisitEntity {
 	@Column(nullable = false)
 	private LocalDateTime time;
 
+	@ManyToOne()
+	@JoinColumn(name = "PATIENT_ID")
+	private PatientEntity patient;
+
 	// relacja dwustronna
 	@ManyToOne
 	@JoinColumn(name = "DOCTOR_ID")
