@@ -1,9 +1,21 @@
 package com.jpacourse.persistance.entity;
 
+import com.jpacourse.persistance.enums.MaritalStatus;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.Collection;
-
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "PATIENT")
@@ -29,6 +41,9 @@ public class PatientEntity {
 
 	@Column(nullable = false)
 	private LocalDate dateOfBirth;
+
+	@Enumerated(EnumType.STRING)
+	private MaritalStatus maritalStatus;
 
 	@OneToOne(
 			cascade = CascadeType.ALL,
@@ -104,4 +119,12 @@ public class PatientEntity {
 	public void setVisits(Collection<VisitEntity> visits) {
 		this.visits = visits;
 	}
+
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
+    }
 }

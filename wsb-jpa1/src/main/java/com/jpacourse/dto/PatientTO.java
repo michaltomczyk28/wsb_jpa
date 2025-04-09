@@ -1,5 +1,6 @@
 package com.jpacourse.dto;
 
+import com.jpacourse.persistance.enums.MaritalStatus;
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,6 +10,8 @@ public class PatientTO implements Serializable {
     private String firstName;
     private String lastName;
     private String patientNumber;
+
+    private MaritalStatus maritalStatus;
 
     private List<VisitTO> visits;
 
@@ -42,6 +45,14 @@ public class PatientTO implements Serializable {
 
     public void setPatientNumber(String patientNumber) {
         this.patientNumber = patientNumber;
+    }
+
+    public MaritalStatus getMaritalStatus() {
+        return maritalStatus;
+    }
+
+    public void setMaritalStatus(MaritalStatus maritalStatus) {
+        this.maritalStatus = maritalStatus;
     }
 
     public List<VisitTO> getVisits() {

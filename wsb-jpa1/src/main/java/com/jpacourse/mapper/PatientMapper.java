@@ -20,6 +20,7 @@ public final class PatientMapper {
         patientTO.setPatientNumber(patientEntity.getPatientNumber());
         patientTO.setFirstName(patientEntity.getFirstName());
         patientTO.setLastName(patientEntity.getLastName());
+        patientTO.setMaritalStatus(patientEntity.getMaritalStatus());
         patientTO.setVisits(
             patientEntity
                 .getVisits()
