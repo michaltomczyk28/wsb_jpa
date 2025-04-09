@@ -8,7 +8,7 @@ VALUES
 
 INSERT INTO DOCTOR (first_name, last_name, telephone_number, email, doctor_number, specialization, address_id)
 VALUES
-    ('Jan', 'Kowalski', '123-456-789', 'jan.kowalski@example.com', 'DOC12345', 'CARDIOLOGIST', 1),
+    ('Maciej', 'Kowalewski', '123-456-789', 'maciej.kowalewski@example.com', 'DOC12345', 'CARDIOLOGIST', 1),
     ('Anna', 'Nowak', '987-654-321', 'anna.nowak@example.com', 'DOC67890', 'DERMATOLOGIST', 2),
     ('Piotr', 'Wiśniewski', '555-666-777', 'piotr.wisniewski@example.com', 'DOC11223', 'DERMATOLOGIST', 3),
     ('Ewa', 'Dąbrowska', '333-222-111', 'ewa.dabrowska@example.com', 'DOC44556', 'GP', 4),
