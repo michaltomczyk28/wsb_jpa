@@ -14,13 +14,13 @@ VALUES
     ('Ewa', 'Dąbrowska', '333-222-111', 'ewa.dabrowska@example.com', 'DOC44556', 'GP', 4),
     ('Marek', 'Zieliński', '777-888-999', 'marek.zielinski@example.com', 'DOC77889', 'DERMATOLOGIST', 5);
 
-INSERT INTO PATIENT (first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id)
+INSERT INTO PATIENT (first_name, last_name, telephone_number, email, patient_number, date_of_birth, marital_status, address_id)
 VALUES
-    ('Jan', 'Kowalski', '123-456-789', 'jan.kowalski@example.com', 'PAT12345', '1985-07-12', 1),
-    ('Anna', 'Nowak', '987-654-321', 'anna.nowak@example.com', 'PAT67890', '1992-03-25', 2),
-    ('Piotr', 'Wiśniewski', '555-666-777', NULL, 'PAT11223', '1978-11-08', 3),
-    ('Ewa', 'Dąbrowska', '333-222-111', 'ewa.dabrowska@example.com', 'PAT44556', '2000-06-30', 4),
-    ('Marek', 'Zieliński', '777-888-999', 'marek.zielinski@example.com', 'PAT77889', '1995-09-15', 5);
+    ('Jan', 'Kowalski', '123-456-789', 'jan.kowalski@example.com', 'PAT12345', '1985-07-12', 'MARRIED', 1),
+    ('Anna', 'Nowak', '987-654-321', 'anna.nowak@example.com', 'PAT67890', '1992-03-25', 'MARRIED', 2),
+    ('Piotr', 'Wiśniewski', '555-666-777', NULL, 'PAT11223', '1978-11-08', 'SINGLE', 3),
+    ('Ewa', 'Dąbrowska', '333-222-111', 'ewa.dabrowska@example.com', 'PAT44556', '2000-06-30', 'DIVORCED', 4),
+    ('Marek', 'Zieliński', '777-888-999', 'marek.zielinski@example.com', 'PAT77889', '1995-09-15', 'WIDOWED', 5);
 
 INSERT INTO VISIT (description, time, patient_id, doctor_id)
 VALUES
