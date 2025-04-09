@@ -53,7 +53,10 @@ public class PatientEntity {
 	@JoinColumn(name="ADDRESS_ID")
 	private AddressEntity address;
 
-	@OneToMany(mappedBy = "patient")
+	@OneToMany(
+		cascade = CascadeType.REMOVE,
+		mappedBy = "patient"
+	)
 	private Collection<VisitEntity> visits;
 
 	public Long getId() {
