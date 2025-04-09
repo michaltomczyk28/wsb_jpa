@@ -18,7 +18,7 @@ public final class VisitMapper {
         final VisitTO visitTO = new VisitTO();
         visitTO.setTime(visitEntity.getTime());
         visitTO.setDoctorFirstName(doctorEntity.getFirstName());
-        visitTO.setDoctorLastName(doctorEntity.getFirstName());
+        visitTO.setDoctorLastName(doctorEntity.getLastName());
         visitTO.setMedicalTreatments(
             visitEntity
                 .getMedicalTreatments()
