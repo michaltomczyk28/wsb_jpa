@@ -54,7 +54,8 @@ public class PatientEntity {
 	private AddressEntity address;
 
 	@OneToMany(
-		cascade = CascadeType.REMOVE,
+//		cascade = CascadeType.REMOVE,
+		cascade = CascadeType.ALL,
 		mappedBy = "patient"
 	)
 	private Collection<VisitEntity> visits;

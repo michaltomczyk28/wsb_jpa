@@ -1,9 +1,43 @@
 package com.jpacourse.persistance.dao.impl;
 
 import com.jpacourse.persistance.dao.PatientDao;
+import com.jpacourse.persistance.entity.DoctorEntity;
 import com.jpacourse.persistance.entity.PatientEntity;
+import com.jpacourse.persistance.entity.VisitEntity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Repository
 public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements PatientDao {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+    @Transactional
+    public void addVisitToPatient(Long patientId, Long doctorId, LocalDateTime visitDate, String visitDescription) {
+        // Pobranie pacjenta z bazy danych
+        PatientEntity patient = entityManager.find(PatientEntity.class, patientId);
+
+        if (patient == null) {
+            throw new IllegalArgumentException("Patient with ID " + patientId + " not found.");
+        }
+
+        DoctorEntity doctor = entityManager.find(DoctorEntity.class, doctorId);
+
+        // Tworzenie nowej encji wizyty
+        VisitEntity visit = new VisitEntity();
+        visit.setDoctor(doctor);
+        visit.setTime(visitDate);
+        visit.setDescription(visitDescription);
+
+        // Dodanie wizyty do pacjenta
+        patient.getVisits().add(visit); // Zakładam, że `Patient` ma odpowiednią relację typu OneToMany z `Visit`
+
+        // Synchronizacja zmian
+        entityManager.merge(patient); // Dzięki kaskadowemu zapisowi `Visit` zostanie także zapisana
+    }
 }
+
