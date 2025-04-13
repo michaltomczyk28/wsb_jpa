@@ -62,4 +62,19 @@ public class PatientDaoTest
         assertThat(patients).hasSize(2);
         assertThat(patients).extracting("firstName").containsExactlyInAnyOrder("Marek", "Anna");
     }
+
+    @Transactional
+    @Test
+    public void testFindPatientsWithMoreThanXVisits() {
+        int visitCount = 3;
+
+        List<PatientEntity> patients = patientDao.findPatientsWithMoreThanXVisits(visitCount);
+
+        assertThat(patients).isNotNull();
+        assertThat(patients.size()).isGreaterThan(0);
+
+        for (PatientEntity patient : patients) {
+            assertThat(patient.getVisits().size()).isGreaterThan(visitCount);
+        }
+    }
 }

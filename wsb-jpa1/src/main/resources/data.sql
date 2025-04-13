@@ -33,6 +33,8 @@ VALUES
     ('Pogorszenie wzroku', '2024-03-16 12:00:00', 2, 2),
     ('Fizjoterapia po operacji', '2024-03-17 15:30:00', 3, 3),
     ('Infekcja gardła', '2024-03-18 09:15:00', 4, 4),
+    ('Example1','2024-03-15 08:30:00',1,1 ),
+    ('Example2','2024-03-15 09:30:00',1,2 ),
     ('Problemy ze snem', '2024-03-19 17:00:00', 5, 5);
 
 INSERT INTO MEDICAL_TREATMENT (description, type, visit_id)
