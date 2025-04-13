@@ -7,12 +7,16 @@ import com.jpacourse.dto.VisitTO;
 import com.jpacourse.persistance.dao.DoctorDao;
 import com.jpacourse.persistance.dao.PatientDao;
 import com.jpacourse.persistance.dao.VisitDao;
+import com.jpacourse.persistance.entity.VisitEntity;
 import com.jpacourse.persistance.enums.MaritalStatus;
 import com.jpacourse.persistance.enums.TreatmentType;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest
 public class PatientServiceTest
@@ -70,4 +74,21 @@ public class PatientServiceTest
         assertThat(firstVisit.getMedicalTreatments().size()).isEqualTo(1);
         assertThat(firstVisit.getMedicalTreatments().get(0)).isEqualTo(TreatmentType.USG);
     }
+
+    @Transactional
+    @Test
+    public void testShouldFindAllVisitsByPatientId() {
+        Long patientId = 1L;
+
+        List<VisitEntity> visits = patientDao.findAllVisitsByPatientId(patientId);
+
+        assertThat(visits).isNotNull();
+        assertThat(visits.size()).isEqualTo(2); // Check if the visits list is not empty
+
+        VisitEntity firstVisit = visits.get(0);
+        assertThat(firstVisit.getPatient().getId()).isEqualTo(patientId);
+        assertThat(firstVisit.getDescription()).isNotEmpty();
+        assertThat(firstVisit.getTime()).isBefore(LocalDateTime.now()); // Checks if the visit date is in the past
+    }
+
 }
