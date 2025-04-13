@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.LIST;
 
 @SpringBootTest
 public class PatientDaoTest
@@ -43,5 +45,21 @@ public class PatientDaoTest
         assertThat(lastVisit.getDoctor().getId()).isEqualTo(doctorId);
         assertThat(lastVisit.getTime()).isEqualTo(localDateTime);
         assertThat(lastVisit.getDescription()).isEqualTo(visitDescription);
+    }
+
+    @Transactional
+    @Test
+    public void testFindByPatientFirstName() {
+        List<PatientEntity> patients = patientDao.findByPatientFirstName("Jan");
+        assertThat(patients).hasSize(2);
+        assertThat(patients).extracting("lastName").containsExactlyInAnyOrder("Kowalski", "Wiśniewski");
+    }
+
+    @Transactional
+    @Test
+    public void testFindByLastName() {
+        List<PatientEntity> patients = patientDao.findByPatientLastName("Nowak");
+        assertThat(patients).hasSize(2);
+        assertThat(patients).extracting("firstName").containsExactlyInAnyOrder("Marek", "Anna");
     }
 }

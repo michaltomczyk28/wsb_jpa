@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements PatientDao {
@@ -38,6 +39,21 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
 
         // Synchronizacja zmian
         entityManager.merge(patient); // Dzięki kaskadowemu zapisowi `Visit` zostanie także zapisana
+    }
+
+    @Override
+    public List<PatientEntity> findByPatientFirstName(String patientName) {
+        return entityManager.createQuery(" select pat from PatientEntity pat" + " where pat.firstName like :param1", PatientEntity.class).setParameter("param1", "%" + patientName + "%").getResultList();
+    }
+
+    @Override
+    public List<PatientEntity> findByVisitDate(LocalDateTime visitDate) {
+        return List.of();
+    }
+
+    @Override
+    public List<PatientEntity> findByPatientLastName(String patientLastName) {
+        return entityManager.createQuery(" select pat from PatientEntity pat" + " where pat.lastName like :param1", PatientEntity.class).setParameter("param1", "%" + patientLastName + "%").getResultList();
     }
 }
 
