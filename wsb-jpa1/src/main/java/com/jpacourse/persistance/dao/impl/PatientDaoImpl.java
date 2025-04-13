@@ -63,5 +63,15 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
                 .setParameter("patientId", patientId)
                 .getResultList();
     }
+
+    @Transactional
+    @Override
+    public List<PatientEntity> findPatientsWithMoreThanXVisits(int visitCount) {
+        return entityManager.createQuery(
+                        "SELECT p FROM PatientEntity p JOIN p.visits v GROUP BY p HAVING COUNT(v) > :visitCount",
+                        PatientEntity.class)
+                .setParameter("visitCount", (long) visitCount)
+                .getResultList();
+    }
 }
 
