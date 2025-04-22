@@ -16,6 +16,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.Collection;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "PATIENT")
@@ -56,8 +58,10 @@ public class PatientEntity {
 	@OneToMany(
 //		cascade = CascadeType.REMOVE,
 		cascade = CascadeType.ALL,
-		mappedBy = "patient"
+		mappedBy = "patient",
+		fetch = FetchType.EAGER
 	)
+	@Fetch(FetchMode.JOIN)
 	private Collection<VisitEntity> visits;
 
 	public Long getId() {
