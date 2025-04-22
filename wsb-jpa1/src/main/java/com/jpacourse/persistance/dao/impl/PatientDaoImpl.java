@@ -4,6 +4,7 @@ import com.jpacourse.persistance.dao.PatientDao;
 import com.jpacourse.persistance.entity.DoctorEntity;
 import com.jpacourse.persistance.entity.PatientEntity;
 import com.jpacourse.persistance.entity.VisitEntity;
+import com.jpacourse.persistance.enums.MaritalStatus;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -14,9 +15,9 @@ import java.util.List;
 
 @Repository
 public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements PatientDao {
-
     @PersistenceContext
     private EntityManager entityManager;
+
     @Transactional
     public void addVisitToPatient(Long patientId, Long doctorId, LocalDateTime visitDate, String visitDescription) {
         // Pobranie pacjenta z bazy danych
@@ -51,7 +52,6 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
         return entityManager.createQuery(" select pat from PatientEntity pat" + " where pat.lastName like :param1", PatientEntity.class).setParameter("param1", "%" + patientLastName + "%").getResultList();
     }
 
-    @Transactional
     @Override
     public List<PatientEntity> findPatientsWithMoreThanXVisits(int visitCount) {
         return entityManager.createQuery(
@@ -59,6 +59,18 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
                         PatientEntity.class)
                 .setParameter("visitCount", (long) visitCount)
                 .getResultList();
+    }
+
+    @Override
+    public List<PatientEntity> findAllThatUsedToBeMarried() {
+        return entityManager
+            .createQuery(
+                "SELECT p FROM PatientEntity p WHERE p.maritalStatus IN (:divorced, :widowed)",
+                PatientEntity.class
+            )
+            .setParameter("divorced", MaritalStatus.DIVORCED)
+            .setParameter("widowed", MaritalStatus.WIDOWED)
+            .getResultList();
     }
 }
 

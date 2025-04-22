@@ -77,4 +77,19 @@ public class PatientDaoTest
             assertThat(patient.getVisits().size()).isGreaterThan(visitCount);
         }
     }
+
+    @Transactional
+    @Test
+    public void testFindAllThatUsedToBeMarried() {
+        // given
+        // when
+        List<PatientEntity> patients = patientDao.findAllThatUsedToBeMarried();
+
+        // then
+        PatientEntity firstPatient = patients.get(0);
+
+        assertThat(patients).hasSize(2);
+        assertThat(firstPatient.getFirstName()).isEqualTo("Ewa");
+        assertThat(firstPatient.getLastName()).isEqualTo("Dąbrowska");
+    }
 }
