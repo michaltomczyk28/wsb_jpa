@@ -47,21 +47,8 @@ public class PatientDaoImpl extends AbstractDao<PatientEntity, Long> implements 
     }
 
     @Override
-    public List<PatientEntity> findByVisitDate(LocalDateTime visitDate) {
-        return List.of();
-    }
-
-    @Override
     public List<PatientEntity> findByPatientLastName(String patientLastName) {
         return entityManager.createQuery(" select pat from PatientEntity pat" + " where pat.lastName like :param1", PatientEntity.class).setParameter("param1", "%" + patientLastName + "%").getResultList();
-    }
-
-    @Transactional
-    public List<VisitEntity> findAllVisitsByPatientId(Long patientId) {
-        return entityManager.createQuery(
-                        "SELECT v FROM VisitEntity v WHERE v.patient.id = :patientId", VisitEntity.class)
-                .setParameter("patientId", patientId)
-                .getResultList();
     }
 
     @Transactional
