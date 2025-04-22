@@ -45,7 +45,7 @@ public class PatientServiceTest
 
         // then
         assertThat(patientDao.findOne(1L)).isNull();
-        assertThat(visitDao.count()).isEqualTo(visitsCount - 2);
+        assertThat(visitDao.count()).isEqualTo(visitsCount - 4);
         assertThat(doctorDao.count()).isEqualTo(doctorsCount);
     }
 
@@ -64,7 +64,7 @@ public class PatientServiceTest
         assertThat(patient.getLastName()).isEqualTo("Kowalski");
         assertThat(patient.getMaritalStatus()).isEqualTo(MaritalStatus.MARRIED);
 
-        assertThat(patient.getVisits().size()).isEqualTo(2);
+        assertThat(patient.getVisits().size()).isEqualTo(4);
 
         VisitTO firstVisit = patient.getVisits().get(0);
         assertThat(firstVisit.getDoctorFirstName()).isEqualTo("Maciej");
@@ -83,7 +83,7 @@ public class PatientServiceTest
         List<VisitEntity> visits = patientDao.findAllVisitsByPatientId(patientId);
 
         assertThat(visits).isNotNull();
-        assertThat(visits.size()).isEqualTo(2); // Check if the visits list is not empty
+        assertThat(visits.size()).isEqualTo(4); // Check if the visits list is not empty
 
         VisitEntity firstVisit = visits.get(0);
         assertThat(firstVisit.getPatient().getId()).isEqualTo(patientId);
