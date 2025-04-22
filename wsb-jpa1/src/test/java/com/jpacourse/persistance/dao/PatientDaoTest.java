@@ -36,7 +36,7 @@ public class PatientDaoTest
 
         PatientEntity updatedPatient = entityManager.find(PatientEntity.class, patient.getId());
 
-        assertThat(updatedPatient.getVisits().size()).isEqualTo(3);
+        assertThat(updatedPatient.getVisits().size()).isEqualTo(5);
 
         Collection<VisitEntity> visits = updatedPatient.getVisits();
 
