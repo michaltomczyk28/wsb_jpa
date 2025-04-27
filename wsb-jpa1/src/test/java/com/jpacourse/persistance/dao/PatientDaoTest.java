@@ -1,19 +1,19 @@
 package com.jpacourse.persistance.dao;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.jpacourse.persistance.entity.PatientEntity;
 import com.jpacourse.persistance.entity.VisitEntity;
 import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.LIST;
+import java.util.concurrent.atomic.AtomicBoolean;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 public class PatientDaoTest
@@ -91,5 +91,45 @@ public class PatientDaoTest
         assertThat(patients).hasSize(2);
         assertThat(firstPatient.getFirstName()).isEqualTo("Ewa");
         assertThat(firstPatient.getLastName()).isEqualTo("Dąbrowska");
+    }
+
+    @Transactional
+    @Test
+    public void testDoesNotAllowConcurrentWriting() throws InterruptedException {
+        // given
+        AtomicBoolean hasSeenException = new AtomicBoolean(false);
+
+        Thread t1 = new Thread(() -> {
+            PatientEntity patient = patientDao.findOne(1L);
+            patient.setEmail("task1@gmail.com");
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                patientDao.update(patient);
+            } catch (ObjectOptimisticLockingFailureException e){
+                hasSeenException.set(true);
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            PatientEntity patient = patientDao.findOne(1L);
+            patient.setEmail("task2@gmail.com");
+            patientDao.update(patient);
+        });
+
+        // when
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        // then
+        assertThat(hasSeenException).isTrue();
     }
 }

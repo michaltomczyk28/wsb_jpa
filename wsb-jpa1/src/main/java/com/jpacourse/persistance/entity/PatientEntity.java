@@ -14,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import java.time.LocalDate;
 import java.util.Collection;
 import org.hibernate.annotations.Fetch;
@@ -63,6 +64,9 @@ public class PatientEntity {
 	)
 	@Fetch(FetchMode.JOIN)
 	private Collection<VisitEntity> visits;
+
+	@Version
+	public int version;
 
 	public Long getId() {
 		return id;
